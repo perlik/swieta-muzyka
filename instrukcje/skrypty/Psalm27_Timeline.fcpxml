@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+<fcpxml version="1.5">
+    <resources>
+        <format id="f1" name="HD 1080p" width="1920" height="1080" frameDuration="1/25s" />
+        <asset id="r0" name="0m00s-0m17s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/0m00s-0m17s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r1" name="0m17s-0m32s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/0m17s-0m32s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r2" name="0m32s-0m46s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/0m32s-0m46s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r3" name="0m46s-1m00s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/0m46s-1m00s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r4" name="1m00s-1m16s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/1m00s-1m16s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r5" name="1m16s-1m29s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/1m16s-1m29s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r6" name="1m29s-1m43s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/1m29s-1m43s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r7" name="1m43s-1m58s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/1m43s-1m58s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r8" name="1m58s-2m10s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/1m58s-2m10s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r9" name="2m10s-2m26s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/2m10s-2m26s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r10" name="2m26s-2m40s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/2m26s-2m40s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r11" name="2m40s-2m55s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/2m40s-2m55s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r12" name="2m55s-3m09s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/2m55s-3m09s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r13" name="3m09s-3m22s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/3m09s-3m22s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r14" name="3m22s-3m34s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/3m22s-3m34s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r15" name="3m34s-3m45s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/3m34s-3m45s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r16" name="3m45s-3m57s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/3m45s-3m57s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r17" name="3m57s-4m08s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/3m57s-4m08s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r18" name="4m08s-4m18s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%2027%20-%20in%20progress%20-%206/images/4m08s-4m18s.jpg" start="0s" hasVideo="1" format="f1" />
+    </resources>
+    <library>
+        <event name="Auto_Import">
+            <project name="Gotowy Psalm 27">
+                <sequence format="f1">
+                    <spine>
+                    <asset-clip ref="r0" offset="0/25s" name="0m00s-0m17s.jpg" start="0s" duration="425/25s" />
+                    <asset-clip ref="r1" offset="425/25s" name="0m17s-0m32s.jpg" start="0s" duration="375/25s" />
+                    <asset-clip ref="r2" offset="800/25s" name="0m32s-0m46s.jpg" start="0s" duration="350/25s" />
+                    <asset-clip ref="r3" offset="1150/25s" name="0m46s-1m00s.jpg" start="0s" duration="350/25s" />
+                    <asset-clip ref="r4" offset="1500/25s" name="1m00s-1m16s.jpg" start="0s" duration="400/25s" />
+                    <asset-clip ref="r5" offset="1900/25s" name="1m16s-1m29s.jpg" start="0s" duration="325/25s" />
+                    <asset-clip ref="r6" offset="2225/25s" name="1m29s-1m43s.jpg" start="0s" duration="350/25s" />
+                    <asset-clip ref="r7" offset="2575/25s" name="1m43s-1m58s.jpg" start="0s" duration="375/25s" />
+                    <asset-clip ref="r8" offset="2950/25s" name="1m58s-2m10s.jpg" start="0s" duration="300/25s" />
+                    <asset-clip ref="r9" offset="3250/25s" name="2m10s-2m26s.jpg" start="0s" duration="400/25s" />
+                    <asset-clip ref="r10" offset="3650/25s" name="2m26s-2m40s.jpg" start="0s" duration="350/25s" />
+                    <asset-clip ref="r11" offset="4000/25s" name="2m40s-2m55s.jpg" start="0s" duration="375/25s" />
+                    <asset-clip ref="r12" offset="4375/25s" name="2m55s-3m09s.jpg" start="0s" duration="350/25s" />
+                    <asset-clip ref="r13" offset="4725/25s" name="3m09s-3m22s.jpg" start="0s" duration="325/25s" />
+                    <asset-clip ref="r14" offset="5050/25s" name="3m22s-3m34s.jpg" start="0s" duration="300/25s" />
+                    <asset-clip ref="r15" offset="5350/25s" name="3m34s-3m45s.jpg" start="0s" duration="275/25s" />
+                    <asset-clip ref="r16" offset="5625/25s" name="3m45s-3m57s.jpg" start="0s" duration="300/25s" />
+                    <asset-clip ref="r17" offset="5925/25s" name="3m57s-4m08s.jpg" start="0s" duration="275/25s" />
+                    <asset-clip ref="r18" offset="6200/25s" name="4m08s-4m18s.jpg" start="0s" duration="250/25s" />
+                    </spine>
+                </sequence>
+            </project>
+        </event>
+    </library>
+</fcpxml>

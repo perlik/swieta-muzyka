@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+<fcpxml version="1.5">
+    <resources>
+        <format id="f1" name="HD 1080p" width="1920" height="1080" frameDuration="1/25s" />
+        <asset id="r0" name="0m00s-0m18s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/0m00s-0m18s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r1" name="0m18s-0m32s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/0m18s-0m32s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r2" name="0m32s-0m44s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/0m32s-0m44s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r3" name="0m44s-0m58s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/0m44s-0m58s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r4" name="0m58s-1m13s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/0m58s-1m13s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r5" name="1m13s-1m26s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/1m13s-1m26s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r6" name="1m26s-1m43s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/1m26s-1m43s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r7" name="1m43s-1m56s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/1m43s-1m56s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r8" name="1m56s-2m11s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/1m56s-2m11s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r9" name="2m11s-2m27s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/2m11s-2m27s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r10" name="2m27s-2m44s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/2m27s-2m44s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r11" name="2m44s-3m04s.jpg" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/images/2m44s-3m04s.jpg" start="0s" hasVideo="1" format="f1" />
+        <asset id="r_audio" name="audio.wav" src="file:///Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20121%20-%20in%20progress%20-%206/audio/audio.wav" start="0s" duration="4600/25s" hasAudio="1" audioSources="1" audioChannels="2" audioRate="48000" />
+    </resources>
+    <library>
+        <event name="Auto_Import">
+            <project name="Gotowy Psalm 121">
+                <sequence format="f1">
+                    <spine>
+                    <asset-clip ref="r0" offset="0/25s" name="0m00s-0m18s.jpg" start="0s" duration="450/25s">
+                        <asset-clip ref="r_audio" lane="-1" offset="0/25s" name="audio.wav" start="0s" duration="4600/25s" />
+                    </asset-clip>
+                    <asset-clip ref="r1" offset="450/25s" name="0m18s-0m32s.jpg" start="0s" duration="350/25s" />
+                    <asset-clip ref="r2" offset="800/25s" name="0m32s-0m44s.jpg" start="0s" duration="300/25s" />
+                    <asset-clip ref="r3" offset="1100/25s" name="0m44s-0m58s.jpg" start="0s" duration="350/25s" />
+                    <asset-clip ref="r4" offset="1450/25s" name="0m58s-1m13s.jpg" start="0s" duration="375/25s" />
+                    <asset-clip ref="r5" offset="1825/25s" name="1m13s-1m26s.jpg" start="0s" duration="325/25s" />
+                    <asset-clip ref="r6" offset="2150/25s" name="1m26s-1m43s.jpg" start="0s" duration="425/25s" />
+                    <asset-clip ref="r7" offset="2575/25s" name="1m43s-1m56s.jpg" start="0s" duration="325/25s" />
+                    <asset-clip ref="r8" offset="2900/25s" name="1m56s-2m11s.jpg" start="0s" duration="375/25s" />
+                    <asset-clip ref="r9" offset="3275/25s" name="2m11s-2m27s.jpg" start="0s" duration="400/25s" />
+                    <asset-clip ref="r10" offset="3675/25s" name="2m27s-2m44s.jpg" start="0s" duration="425/25s" />
+                    <asset-clip ref="r11" offset="4100/25s" name="2m44s-3m04s.jpg" start="0s" duration="500/25s" />
+                    </spine>
+                </sequence>
+            </project>
+        </event>
+    </library>
+</fcpxml>

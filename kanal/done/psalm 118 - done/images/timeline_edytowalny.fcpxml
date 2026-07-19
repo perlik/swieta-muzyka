@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+<fcpxml version="1.8">
+    <resources>
+        <format id="r1" name="Custom Format" width="2944" height="1656" frameDuration="1/25s" />
+        <asset id="r2" name="0m00s-0m15s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/0m00s-0m15s.jpg" />
+        <asset id="r3" name="0m15s-0m27s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/0m15s-0m27s.jpg" />
+        <asset id="r4" name="0m27s-0m41s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/0m27s-0m41s.jpg" />
+        <asset id="r5" name="0m41s-0m54s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/0m41s-0m54s.jpg" />
+        <asset id="r6" name="0m54s-1m08s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/0m54s-1m08s.jpg" />
+        <asset id="r7" name="1m08s-1m28s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/1m08s-1m28s.jpg" />
+        <asset id="r8" name="1m28s-1m40s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/1m28s-1m40s.jpg" />
+        <asset id="r9" name="1m40s-1m54s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/1m40s-1m54s.jpg" />
+        <asset id="r10" name="1m54s-2m06s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/1m54s-2m06s.jpg" />
+        <asset id="r11" name="2m06s-2m21s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/2m06s-2m21s.jpg" />
+        <asset id="r12" name="2m21s-2m37s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/2m21s-2m37s.jpg" />
+        <asset id="r13" name="2m37s-2m49s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/2m37s-2m49s.jpg" />
+        <asset id="r14" name="2m49s-3m04s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/2m49s-3m04s.jpg" />
+        <asset id="r15" name="3m04s-3m17s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/3m04s-3m17s.jpg" />
+        <asset id="r16" name="3m17s-3m30s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/3m17s-3m30s.jpg" />
+        <asset id="r17" name="3m30s-3m42s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/3m30s-3m42s.jpg" />
+        <asset id="r18" name="3m42s-3m56s.jpg" src="file://localhost/Volumes/ADATA%20SE880/_%C5%9Awi%C4%99ta%20Muzyka/_claude/psalm%20118%20-%20in%20progress%20-%207/images/3m42s-3m56s.jpg" />
+    </resources>
+    <library>
+        <event name="Auto_Import">
+            <project name="Auto Timeline">
+                <sequence format="r1">
+                    <spine>
+                    <video ref="r2" name="0m00s-0m15s.jpg" offset="0/25s" duration="375/25s" />
+                    <video ref="r3" name="0m15s-0m27s.jpg" offset="375/25s" duration="300/25s" />
+                    <video ref="r4" name="0m27s-0m41s.jpg" offset="675/25s" duration="350/25s" />
+                    <video ref="r5" name="0m41s-0m54s.jpg" offset="1025/25s" duration="325/25s" />
+                    <video ref="r6" name="0m54s-1m08s.jpg" offset="1350/25s" duration="350/25s" />
+                    <video ref="r7" name="1m08s-1m28s.jpg" offset="1700/25s" duration="500/25s" />
+                    <video ref="r8" name="1m28s-1m40s.jpg" offset="2200/25s" duration="300/25s" />
+                    <video ref="r9" name="1m40s-1m54s.jpg" offset="2500/25s" duration="350/25s" />
+                    <video ref="r10" name="1m54s-2m06s.jpg" offset="2850/25s" duration="300/25s" />
+                    <video ref="r11" name="2m06s-2m21s.jpg" offset="3150/25s" duration="375/25s" />
+                    <video ref="r12" name="2m21s-2m37s.jpg" offset="3525/25s" duration="400/25s" />
+                    <video ref="r13" name="2m37s-2m49s.jpg" offset="3925/25s" duration="300/25s" />
+                    <video ref="r14" name="2m49s-3m04s.jpg" offset="4225/25s" duration="375/25s" />
+                    <video ref="r15" name="3m04s-3m17s.jpg" offset="4600/25s" duration="325/25s" />
+                    <video ref="r16" name="3m17s-3m30s.jpg" offset="4925/25s" duration="325/25s" />
+                    <video ref="r17" name="3m30s-3m42s.jpg" offset="5250/25s" duration="300/25s" />
+                    <video ref="r18" name="3m42s-3m56s.jpg" offset="5550/25s" duration="350/25s" />
+                    </spine>
+                </sequence>
+            </project>
+        </event>
+    </library>
+</fcpxml>
