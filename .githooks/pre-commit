@@ -1,0 +1,15 @@
+#!/bin/sh
+# Zabezpieczenie: commity w tym repo mają zawsze iść jako "perlik", nigdy jako aperlins.
+expected_name="perlik"
+expected_email="perlinski.andrzej@gmail.com"
+
+name=$(git config user.name)
+email=$(git config user.email)
+
+if [ "$name" != "$expected_name" ] || [ "$email" != "$expected_email" ]; then
+    echo "BLOKADA COMMITA: tożsamość gita to '$name <$email>', a musi być '$expected_name <$expected_email>'." >&2
+    echo "Napraw przez:" >&2
+    echo "  git config user.name \"$expected_name\"" >&2
+    echo "  git config user.email \"$expected_email\"" >&2
+    exit 1
+fi
