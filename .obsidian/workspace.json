@@ -1,0 +1,208 @@
+{
+  "main": {
+    "id": "76e88a4228baf9bc",
+    "type": "split",
+    "children": [
+      {
+        "id": "6855b6998ae3aa54",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "79dce2f8503fa443",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "psalm 42 - in progress - 5/images/4m06s-4m19s.jpg"
+              },
+              "icon": "lucide-image",
+              "title": "4m06s-4m19s"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "142e6b394f41472b",
+    "type": "split",
+    "children": [
+      {
+        "id": "59754e45b3a47a43",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "60fae217101cfcce",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Przeglądarka plików"
+            }
+          },
+          {
+            "id": "349d361f16cfa687",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Wyszukiwarka"
+            }
+          },
+          {
+            "id": "4970498e32b295dd",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Ulubione"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "41f3d184fb815954",
+    "type": "split",
+    "children": [
+      {
+        "id": "2b8351bafbab3b2a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "57d2a6747f9da6ce",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Linki zwrotne"
+            }
+          },
+          {
+            "id": "0a7118ed48087c6a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Łącza wychodzące"
+            }
+          },
+          {
+            "id": "a55b0f8bf2b1b4c5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tagi"
+            }
+          },
+          {
+            "id": "efa79a740c803157",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Wszystkie atrybuty"
+            }
+          },
+          {
+            "id": "6f931ad0f1968836",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "psalm 42 - in progress - 5/images/0m00s-0m18s.jpg",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Konspekt 0m00s-0m18s"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Otwórz okno szybkiego wyboru": false,
+      "graph:Otwórz podgląd grafu": false,
+      "canvas:Stwórz nową tablicę": false,
+      "daily-notes:Otwórz dzisiejszy dziennik": false,
+      "templates:Wstaw szablon": false,
+      "command-palette:Otwórz listę poleceń": false,
+      "bases:Stwórz nową bazę danych": false
+    }
+  },
+  "active": "60fae217101cfcce",
+  "lastOpenFiles": [
+    "psalm 42 - in progress - 6/images/thumb.png",
+    "psalm 42 - in progress - 6/images/nano banna pro/5.png",
+    "psalm 42 - in progress - 6/images/nano banna pro/4.png",
+    "psalm 42 - in progress - 6/images/nano banna pro/3.png",
+    "psalm 42 - in progress - 6/images/nano banna pro/1.png",
+    "psalm 42 - in progress - 6/images/nano banna pro/2.png",
+    "psalm 42 - in progress - 6/audio/audio.wav",
+    "psalm 42 - in progress - 6/audio/audio (Vocals).wav",
+    "psalm 42 - in progress - 6/audio/audio (Vocals).mp3",
+    "psalm 42 - in progress - 6/txt/style.txt",
+    "psalm 42 - in progress - 6/txt/napisy.srt.whisper.json",
+    "psalm 42 - in progress - 6/txt/napisy.srt",
+    "psalm 42 - in progress - 6/txt/lirycs.txt",
+    "psalm 42 - in progress - 6/txt/opis.txt",
+    "psalm 42 - in progress - 6/prompts/prompty.md",
+    "psalm 42 - in progress - 6/images/nano banna pro",
+    "psalm 42 - in progress - 6/images/4m19s-4m33s.jpg",
+    "psalm 42 - in progress - 6/images/4m06s-4m19s.jpg",
+    "psalm 42 - in progress - 6/images/3m52s-4m06s.jpg",
+    "psalm 42 - in progress - 6/images/3m36s-3m52s.jpg",
+    "psalm 42 - in progress - 6/images/3m23s-3m36s.jpg",
+    "psalm 42 - in progress - 6/wideo",
+    "psalm 42 - in progress - 5/prompts/prompty.md",
+    "psalm 42 - in progress - 2/prompts/prompty.md"
+  ]
+}

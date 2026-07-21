@@ -34,11 +34,11 @@ from urllib.parse import quote
 
 # ==========================================
 # TUTAJ WPISZ ŚCIEŻKĘ DO FOLDERU Z PLIKAMI (images/ po Etapie 5):
-FOLDER_PATH = r"/Volumes/ADATA SE880/_Święta Muzyka/_claude/psalm 90 - in progress - 3/images"
+FOLDER_PATH = r"/Volumes/ADATA SE880/_Święta Muzyka/psalm 42 - in progress - 7/images"
 # Gdzie zapisać plik wynikowy.
 # Uwaga: mimo że skrypt czyta obrazki z images/, wynikowy plik timeline
 # to plik projektu montażowego, więc ląduje w render/, nie w images/.
-OUTPUT_XMEML = r"/Volumes/ADATA SE880/_Święta Muzyka/_claude/psalm 90 - in progress - 3/render/timeline_edytowalny_fcp7.xml"
+OUTPUT_XMEML = r"/Volumes/ADATA SE880/_Święta Muzyka/psalm 42 - in progress - 7/render/timeline_edytowalny_fcp7.xml"
 # Klatkaż timeline'u (np. 25, 24, 30):
 FPS = 25
 # Nazwa projektu/sekwencji widoczna w Resolve:
