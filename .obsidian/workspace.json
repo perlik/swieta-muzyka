@@ -4,19 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "6855b6998ae3aa54",
+        "id": "32510304c2f46403",
         "type": "tabs",
         "children": [
           {
-            "id": "79dce2f8503fa443",
+            "id": "0f715fbc11e88dac",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "psalm 42 - in progress - 5/images/4m06s-4m19s.jpg"
+                "file": "psalm 121 - done/prompts/prompty_v2.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "4m06s-4m19s"
+              "icon": "lucide-file",
+              "title": "prompty_v2"
             }
           }
         ]
@@ -39,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Przeglądarka plików"
@@ -92,6 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "psalm 121 - done/prompts/prompty_v2.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,39 +174,52 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "command-palette:Otwórz paletę poleceń": false,
       "switcher:Otwórz okno szybkiego wyboru": false,
       "graph:Otwórz podgląd grafu": false,
       "canvas:Stwórz nową tablicę": false,
       "daily-notes:Otwórz dzisiejszy dziennik": false,
       "templates:Wstaw szablon": false,
-      "command-palette:Otwórz listę poleceń": false,
       "bases:Stwórz nową bazę danych": false
     }
   },
-  "active": "60fae217101cfcce",
+  "active": "0f715fbc11e88dac",
   "lastOpenFiles": [
-    "psalm 42 - in progress - 6/images/thumb.png",
-    "psalm 42 - in progress - 6/images/nano banna pro/5.png",
-    "psalm 42 - in progress - 6/images/nano banna pro/4.png",
-    "psalm 42 - in progress - 6/images/nano banna pro/3.png",
-    "psalm 42 - in progress - 6/images/nano banna pro/1.png",
-    "psalm 42 - in progress - 6/images/nano banna pro/2.png",
-    "psalm 42 - in progress - 6/audio/audio.wav",
-    "psalm 42 - in progress - 6/audio/audio (Vocals).wav",
-    "psalm 42 - in progress - 6/audio/audio (Vocals).mp3",
-    "psalm 42 - in progress - 6/txt/style.txt",
-    "psalm 42 - in progress - 6/txt/napisy.srt.whisper.json",
-    "psalm 42 - in progress - 6/txt/napisy.srt",
-    "psalm 42 - in progress - 6/txt/lirycs.txt",
-    "psalm 42 - in progress - 6/txt/opis.txt",
+    "psalm 121 - done/txt/opis2.txt",
+    "psalm 121 - done/images/v2/Psalm 121 - Gdy nie wiesz, skąd nadejdzie pomoc | Psalm 121 śpiewany.jpg",
+    "psalm 121 - done/render/Psalm 121 - Gdy nie wiesz, skąd nadejdzie pomoc | Psalm 121 śpiewany.mov",
+    "psalm 121 - done/render/video.mov",
+    "psalm 121 - done/txt/napisy_v4.srt",
+    "psalm 121 - done/txt/napisy_v3.srt",
+    "psalm 121 - done/images/v2/kierunki-ruchu.tsv",
+    "psalm 121 - done/images/v1/Ten, który nigdy nie zasypia (Psalm 121).jpg",
+    "psalm 121 - done/images/v1/2m44s-3m04s.jpg",
+    "psalm 121 - done/images/v1/2m27s-2m44s.jpg",
+    "psalm 121 - done/images/v1/2m11s-2m27s.jpg",
+    "psalm 121 - done/images/v1/1m56s-2m11s.jpg",
+    "psalm 121 - done/images/v1/1m43s-1m56s.jpg",
+    "psalm 121 - done/images/v1/1m26s-1m43s.jpg",
+    "psalm 121 - done/images/v1/1m13s-1m26s.jpg",
+    "psalm 121 - done/images/v1/0m58s-1m13s.jpg",
+    "psalm 121 - done/images/v1",
+    "psalm 121 - done/render/timeline_edytowalny_fcp7.xml",
+    "psalm 121 - done/images/v2/_do_usuniecia",
+    "psalm 121 - done/images/v2/Unconfirmed 595699.crdownload",
+    "psalm 121 - done/images/v2/Unconfirmed 427540.crdownload",
+    "psalm 34 - in progress - 8/prompts/prompty.md",
+    "psalm 34 - done/prompts/prompty.md",
+    "psalm 34 - in progress - 3/prompts/prompty.md",
+    "CLAUDE.md",
+    "psalm 46 - in progress - 3/prompts/prompty.md",
+    "psalm 46 - in progress - 7/prompts/prompty.md",
+    "psalm 46 - in progress - 2/prompts/prompty.md",
+    "kanal/done/psalm 19 - done/prompts/prompty.md",
+    "psalm 19 - done/prompts/prompty.md",
+    "psalm 19 - in progress - done/prompts/prompty.md",
+    "psalm 19 - in progress - 8/prompts/prompty.md",
+    "psalm 19 - in progress - 5/prompts/prompty.md",
+    "psalm 19 - in progress - 3/prompts/prompty.md",
     "psalm 42 - in progress - 6/prompts/prompty.md",
-    "psalm 42 - in progress - 6/images/nano banna pro",
-    "psalm 42 - in progress - 6/images/4m19s-4m33s.jpg",
-    "psalm 42 - in progress - 6/images/4m06s-4m19s.jpg",
-    "psalm 42 - in progress - 6/images/3m52s-4m06s.jpg",
-    "psalm 42 - in progress - 6/images/3m36s-3m52s.jpg",
-    "psalm 42 - in progress - 6/images/3m23s-3m36s.jpg",
-    "psalm 42 - in progress - 6/wideo",
     "psalm 42 - in progress - 5/prompts/prompty.md",
     "psalm 42 - in progress - 2/prompts/prompty.md"
   ]

@@ -21,11 +21,14 @@ Plik **`kanal/ranking_fraz_seo.csv`** — analiza SEO (wolumen wyszukań/mies., 
 0. **Pierwsze zdanie zawsze wprost mówi, jakiego psalmu dotyczy film** (np. „Psalm X śpiewany po polsku…") — zanim jeszcze wejdą frazy SEO, widz/algorytm ma jasność, o który psalm chodzi.
 1. **Akapit SEO (pierwsze ~150 znaków to najważniejsza część opisu):** zdanie o psalmie (patrz pkt 0) + w **pierwszych dwóch zdaniach** obowiązkowo wszystkie **trzy stałe frazy otwierające** („muzyka chrześcijańska", „piosenki religijne", „muzyka katolicka"), wplecione naturalnie — bez wyliczanki.
 2. **Akapit 2:** krótki opis aranżacji i teledysku, z kolejnymi frazami niskiej konkurencji z `ranking_fraz_seo.csv` (dopasowanymi tematycznie do psalmu) wplecionymi naturalnie.
-3. **🔔 Krótkie CTA subskrypcji + 🎧 link do playlisty „Psalmy śpiewane"** (dwie linijki, jedna pod drugą, nad tekstem pieśni — łapią czytających tylko górę opisu). Link subskrypcji: `https://www.youtube.com/@swieta-muzyka?sub_confirmation=1` (otwiera okno subskrypcji). Playlista wydłuża sesję widza w obrębie kanału — silny sygnał dla browse. Kanał projektu: https://www.youtube.com/@swieta-muzyka | Playlista „Psalmy śpiewane": https://www.youtube.com/playlist?list=PLx3JbKsW_a05aXyvEW1BSj1Ek3tMBE0UA
-4. **🎵 TEKST PIEŚNI** — pełny tekst parafrazy (każda linijka staje się frazą wyszukiwalną).
-5. **▶ POSŁUCHAJ TAKŻE** — linki do pozostałych psalmów kanału. Źródło linków: plik `instrukcje/baza-linków.md` — za każdym razem przy tworzeniu opisu wstawiać stamtąd 3 linki do już opublikowanych filmów (jeśli opublikowanych filmów jest więcej niż 3, wybrać najbardziej pasujące tematycznie lub najnowsze). Jeśli film, do którego linkujemy, jeszcze nie jest opublikowany, wstawić „[LINK - uzupełnij po publikacji]". Po publikacji nowego filmu: dopisać jego link do `baza-linków.md` oraz zaktualizować „[LINK - uzupełnij po publikacji]" na realny link we wszystkich starszych opisach, które go referencjonują.
-6. **Blurb kanału** + cytat „Śpiewajcie Panu pieśń nową" (Ps 96,1).
-7. **3–5 hashtagów.** Nigdy nie używać `#modlitwa`.
+3. **Akapit 3 — kontekst/treść psalmu (decyzja użytkownika, 2026-07, wzorzec: Psalm 19, Psalm 46):** dłuższy akapit przybliżający treść i przesłanie samego psalmu — skąd/z jakich okoliczności pochodzi (jeśli to coś wnosi), jego główny obraz/wezwanie (najlepiej z bezpośrednim cytatem z tekstu pieśni), do kogo psalm jest kierowany (jaki stan/sytuacja życiowa) i kiedy/w jakich okolicznościach warto go słuchać (modlitwa poranna, przed trudną decyzją, wieczorem, w kryzysie itd.). To akapit „dla czytającego do końca", pogłębiający, nie tylko SEO.
+4. **🔔 Krótkie CTA subskrypcji + 🎧 link do playlisty „Psalmy śpiewane"** (dwie linijki, jedna pod drugą, nad tekstem pieśni — łapią czytających tylko górę opisu). Link subskrypcji: `https://www.youtube.com/@swieta-muzyka?sub_confirmation=1` (otwiera okno subskrypcji). Playlista wydłuża sesję widza w obrębie kanału — silny sygnał dla browse. Kanał projektu: https://www.youtube.com/@swieta-muzyka | Playlista „Psalmy śpiewane": https://www.youtube.com/playlist?list=PLx3JbKsW_a05aXyvEW1BSj1Ek3tMBE0UA
+5. **🎵 TEKST PIEŚNI** — pełny tekst parafrazy (każda linijka staje się frazą wyszukiwalną).
+6. **▶ POSŁUCHAJ TAKŻE** — linki do pozostałych psalmów kanału. Źródło linków: plik `instrukcje/baza-linków.md` — za każdym razem przy tworzeniu opisu wstawiać stamtąd 3 linki do już opublikowanych filmów (jeśli opublikowanych filmów jest więcej niż 3, wybrać najbardziej pasujące tematycznie lub najnowsze). Jeśli film, do którego linkujemy, jeszcze nie jest opublikowany, wstawić „[LINK - uzupełnij po publikacji]". Po publikacji nowego filmu: dopisać jego link do `baza-linków.md` oraz zaktualizować „[LINK - uzupełnij po publikacji]" na realny link we wszystkich starszych opisach, które go referencjonują.
+7. **Blurb kanału** + cytat „Śpiewajcie Panu pieśń nową" (Ps 96,1).
+8. **3–5 hashtagów.** Nigdy nie używać `#modlitwa`.
+
+**Uwaga (2026-07, decyzja użytkownika): nie dodawać już informacji o napisach/CC do opisu** — usunięto z formatu (dawny punkt 5).
 
 ## Przypięty komentarz
 
@@ -48,10 +51,29 @@ modlitwa śpiewana, muzyka chrześcijańska, muzyka chrześcijańska polska, muz
 W browse widz zawsze widzi miniaturę i tytuł razem, więc nie powtarzają one tej samej informacji:
 
 - **Miniatura**: duży napis „PSALM X śpiewany" — identyfikacja i marka serii.
-- **Tytuł**: wzorzec „[emocjonalny hak] (Psalm X)", np. „Gdy strach nie daje zasnąć (Psalm 91)". Hak na pierwszych znakach (moment życia, cytat z pieśni albo obietnica doświadczenia), numer psalmu w nawiasie na końcu jako siatka bezpieczeństwa dla miejsc, gdzie tytuł występuje niemal sam (proponowane na telefonie, wyszukiwarka, udostępnienia). Maksymalnie ~60 znaków, bez wersalików i wyliczanki keywordów.
+- **Tytuł, wzorzec obowiązujący od 2026-07-30** (ustalony na danych kanału po 3 tygodniach; zastępuje wcześniejszy „[hak] (Psalm X)" z numerem w nawiasie na końcu):
+
+  ```
+  Psalm X - [hak sytuacyjny] | Psalm X śpiewany
+  ```
+
+  np. `Psalm 91 - Gdy boisz się o tych, których kochasz | Psalm 91 śpiewany`.
 - **Opis, pierwsza linia**: frazy pod wyszukiwarkę (np. „Psalm 91 śpiewany po polsku - muzyka chrześcijańska") — pracują dla algorytmu, widz czyta je dopiero po kliknięciu.
 
-Zasada żelazna: „Psalm X" musi być widoczne przynajmniej w jednym z dwóch elementów (miniatura lub tytuł). Wyjątek: jeśli miniatura nie niesie napisu z numerem psalmu, numer wraca na początek tytułu („Psalm X - [hak]").
+### Reguły wzorca
+
+1. **Fraza szukalna NIE idzie na początek tytułu.** Ruch kanału przychodzi z browse, a nie z wyszukiwarki, więc tytuł pracuje jako podpis obok miniatury, nie jako ciąg do dopasowania. Miniatura i tak niesie „Psalm X śpiewany" wielkimi literami - powtarzanie tego w widocznej części tytułu zjadałoby znaki na drugą kopię tej samej informacji.
+2. **Widoczne okno to część przed pionową kreską: 40-52 znaki.** Na telefonie tytuł urywa się koło pięćdziesiątki, więc hak musi się zmieścić w całości. Cała długość z ogonem: do ~75 znaków.
+3. **Ogon zawsze z numerem** - `| Psalm 91 śpiewany`, nie `| Psalm śpiewany`. Dokładnie tę frazę ludzie wpisują, a numer tuż przy słowie „śpiewany" daje dopasowanie całego wyrażenia. Na telefonie ogon i tak się nie wyświetla, więc nic nie kosztuje. **Tekst z miniatury NIE liczy się do indeksowania** - fraza musi być w tytule albo w opisie; samo umieszczenie jej na obrazku nie daje w wyszukiwarce nic.
+4. **Hak nazywa sytuację widza, nie cytuje incipitu.** W kohorcie z 2. tygodnia kanału tytuły sytuacyjne biły incipitowe: „Gdzie schronić serce, gdy czas ucieka?" - 134 wyświetlenia, „Oto dzień, który Pan uczynił" - 52. Przesłanka słabsza niż hipoteza o długości utworu (pięć filmów, splątane z długością), ale kierunek zgodny z profilem odbiorcy.
+5. **Rotować konstrukcje haka.** Na stronie kanału widać kilkanaście tytułów naraz i seria zbudowana w całości z „Gdy…" czyta się jak generator, a nie jak seria. Proporcja z przebudowy katalogu 2026-07-30: 7 × „Gdy", 2 × „Kiedy", 4 zdania oznajmujące, 1 pytanie.
+6. **Bez wersalików i bez wyliczanki keywordów** w widocznej części.
+
+Zasada żelazna: numer psalmu stoi teraz i na początku tytułu, i w ogonie, więc identyfikacja jest spełniona niezależnie od miniatury.
+
+**Kiedy ten wzorzec zrewidować:** co jakiś czas sprawdzić Studio → Źródła ruchu. Jeśli udział „YouTube search" zacznie wyraźnie rosnąć (materiał evergreen z czasem to robi), warto przetestować frazę szukalną z przodu. Zmiana tytułu opublikowanego filmu niczym nie grozi.
+
+**Czego nie ruszać:** haków filmów o wyraźnie najlepszych wynikach. Przy przebudowie katalogu 2026-07-30 haki Psalmu 100 („W dobre ręce Pasterza", 277 wyświetleń) i Psalmu 90 („Gdzie schronić serce, gdy czas ucieka?", 134) zostały nietknięte - zmienił się w nich tylko ogon.
 
 ## Zawsze wymyślić przynajmniej DZIESIĘĆ propozycji tytułów i ułożyć je w ranking
 
@@ -73,6 +95,13 @@ Cały ranking (wszystkie 10 pozycji, w kolejności malejącej) zapisywany w `opi
 Tytuły (główny i pretendent) muszą pasować zarówno do widza, jak i widzki — unikać form osobowych nacechowanych rodzajem (przymiotniki/imiesłowy typu „samotny", „niezrozumiany", czasowniki w czasie przeszłym typu „czułeś/czułaś"). Zamiast przymiotnika/imiesłowu użyć rzeczownika lub przeformułować zdanie w stronę bezosobową/rzeczownikową.
 
 Przykład: zamiast „Gdy czujesz się samotny i niezrozumiany (Psalm 139)" → „Gdy czujesz samotność i brak zrozumienia (Psalm 139)".
+
+**Najczęstsza wpadka: słowo „sam".** Wchodzi do zdania niepostrzeżenie, bo brzmi jak wzmocnienie, a nie jak forma rodzajowa - i przeszło przez pierwszą wersję dwóch tytułów z przebudowy 2026-07-30:
+
+- „Nawet w ciemnej dolinie nie jesteś sam" → „Nawet w ciemnej dolinie ktoś idzie obok"
+- „Kiedy sam sobie nie umiesz wybaczyć" → „Kiedy nie umiesz wybaczyć sobie"
+
+Przy każdym haku przeczytaj go na końcu tak, jakby czytała go kobieta. To wyłapuje „sam", „gotowy", „zmęczony", „czułeś" szybciej niż szukanie ich z listy.
 
 ## Interpunkcja
 
