@@ -95,22 +95,27 @@ Plik wynikowy trafia domyślnie do `render/timeline_edytowalny_fcp7.xml` w folde
 | `--pan` | 6 (%) | przesunięcie w bok w skrajnym punkcie, w % szerokości kadru; `0` zostawia sam zoom |
 | `--przejscia` | 2.5 s | Cross Dissolve na każdym cięciu; `0` wyłącza |
 | `--kierunki` | `<images>/kierunki-ruchu.tsv` | plik ze stronami ruchu |
-| `--audio` | pierwszy istniejący z `audio/` | plik audio na oś czasu; `brak` nie wstawia |
+| `--audio` | pierwszy istniejący z `audio/` | plik audio do kontroli długości osi i dociągnięcia ostatniego kadru (na oś NIE trafia); `brak` pomija analizę |
 | `--bez-dociagania` | — | nie przedłużaj ostatniego kadru do końca audio |
-| `--audio-fade` | 0 (wyłączone) | wyciszenie audio na krańcach, w sekundach |
 | `--markery` | `txt/napisy.srt` | plik SRT na markery; `brak` wyłącza |
 | `--fade` | 1.5 s | wejście z czerni i zejście do czerni; `0` wyłącza |
 | `--ekran-koncowy` | 20 s | marker pod ekran końcowy YouTube, tyle przed końcem |
 
 Wartości 25% zoomu i 6% panu są przeniesione z „Holy Creator", gdzie ustalono je po odsłuchu gotowej osi — wcześniejsze 5-8% zoomu było na gotowym filmie praktycznie niewidoczne. `--pan` powyżej `zoom/4` daje ostrzeżenie, powyżej `zoom/2` skrypt przerywa (przesunięcie nie zmieściłoby się w zapasie i w kadrze pokazałby się czarny pas).
 
-## Audio na osi czasu (od 2026-08-09)
+## Audio: tylko kontrola długości, bez wstawiania na oś (zmiana 2026-08-14)
 
-Skrypt wstawia ścieżkę audio sam — nie trzeba jej wrzucać ręcznie ani dosuwać do zera.
-Bierze **pierwszy istniejący** plik z `audio/` w kolejności `audio_eq_v3.wav` →
-`audio_eq_v2.wav` → `audio.wav` i wypisuje ostrzeżenie, gdy trafił na coś innego niż
-master v3 (np. surowy plik z Suno, czyli Etap 1A nieodrobiony). Stereo idzie jako jeden
-klip z `channelcount 2`, a nie dwie ścieżki mono, jak robił FCP7.
+**Skrypt NIE wstawia już ścieżki audio do XML** (decyzja użytkownika 2026-08-14;
+w okresie 2026-08-09..2026-08-14 wstawiał ją sam). Dźwięk wrzuca się do Resolve
+ręcznie: przeciągnąć plik z `audio/` (dla nowych psalmów `audio_eq_v3.wav`) na
+ścieżkę audio i dosunąć do klatki 0 — pamiętając o wyłączeniu Equalizera na tej
+ścieżce, bo EQ jest wpieczony w plik (patrz Etap 1A).
+
+Plik audio nadal jest **odczytywany**: pierwszy istniejący z `audio/` w kolejności
+`audio_eq_v3.wav` → `audio_eq_v2.wav` → `audio.wav`, z ostrzeżeniem, gdy to nie
+master v3 (np. surowy plik z Suno, czyli Etap 1A nieodrobiony) — ale wyłącznie po to,
+żeby porównać długość dźwięku z osią i dociągnąć ostatni kadr (patrz niżej).
+`--audio brak` pomija także tę analizę.
 
 ### Dociągnięcie ostatniego kadru do końca audio
 

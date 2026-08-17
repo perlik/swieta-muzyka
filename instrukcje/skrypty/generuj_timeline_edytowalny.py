@@ -63,13 +63,6 @@ pomijać, bo napisy wchodzą jako napisy SRT z Etapu 2, nie jako kadry.)
 
 CO JESZCZE TRAFIA NA OŚ (dodane 2026-08-09, żeby zdjąć ręczne kroki po imporcie):
 
-* **Audio** — pierwszy istniejący plik z `audio/` (kolejność: `audio_eq_v3.wav`,
-  `audio_eq_v2.wav`, `audio.wav`) ląduje na ścieżce audio zaczepiony na klatce 0.
-  Skrypt porównuje jego długość z długością osi i, gdy audio wystaje o mniej niż
-  sekundę, **dociąga ostatni kadr do końca dźwięku**. To nie kosmetyka: nazwy kadrów
-  z Etapu 5 mają rozdzielczość jednej sekundy, więc oś kończy się ułamek sekundy przed
-  audio, Resolve renderuje do dłuższego strumienia i w gotowym pliku zostaje ogon
-  kilkunastu klatek (Psalm 119: 18 klatek). Wyłącznik: `--bez-dociagania`.
 * **Markery** z `txt/napisy.srt` — jeden na starcie każdej linijki, z jej tekstem jako
   nazwą, plus marker `EKRAN KOŃCOWY YouTube` na `--ekran-koncowy` sekund przed końcem.
   Pozwala sprawdzić „czy kadr pasuje do tego, co leci" przewijając oś zamiast
@@ -77,6 +70,18 @@ CO JESZCZE TRAFIA NA OŚ (dodane 2026-08-09, żeby zdjąć ręczne kroki po impo
 * **Fade z czerni i do czerni** (`--fade`, domyślnie 1.5 s) na krańcach osi, jako
   Cross Dissolve z wyrównaniem `start-black` / `end-black` — te warianty nie potrzebują
   zapasu z sąsiada, którego na krańcach nie ma.
+
+AUDIO — TYLKO KONTROLA DŁUGOŚCI, BEZ WSTAWIANIA NA OŚ (zmiana 2026-08-14, decyzja
+użytkownika; wcześniej, 2026-08-09..2026-08-14, skrypt wstawiał ścieżkę audio sam):
+ścieżka audio NIE jest wstawiana do XML — dźwięk wrzuca się do Resolve ręcznie
+(przeciągnąć plik z `audio/` na oś i dosunąć do klatki 0). Skrypt nadal ODCZYTUJE
+pierwszy istniejący plik z `audio/` (kolejność: `audio_eq_v3.wav`, `audio_eq_v2.wav`,
+`audio.wav`), ale wyłącznie po to, żeby porównać jego długość z osią i, gdy audio
+wystaje o mniej niż sekundę, **dociągnąć ostatni kadr do końca dźwięku**. To nie
+kosmetyka: nazwy kadrów z Etapu 5 mają rozdzielczość jednej sekundy, więc oś kończy
+się ułamek sekundy przed audio, Resolve renderuje do dłuższego strumienia i w gotowym
+pliku zostaje ogon kilkunastu klatek (Psalm 119: 18 klatek). Wyłączniki:
+`--bez-dociagania` (samo dociąganie), `--audio brak` (cała analiza audio).
 
 Czego przez XMEML v5 zrobić NIE można: napisów (Resolve importuje SRT osobno przez
 File → Import → Subtitle) ani ustawień eksportu. Jedno i drugie dałoby się zrobić
@@ -87,7 +92,7 @@ Użycie:
         [--out <plik.xml>] [--fps 60] [--name "..."] [--handle 10] \\
         [--zoom 25] [--zoom-ref 12] [--zoom-min 6] [--pan 6] \\
         [--kierunki <plik.tsv>] [--zoom-klatek 25] [--width 2560] [--height 1440] \\
-        [--audio <plik|brak>] [--audio-fade 0] [--bez-dociagania] \\
+        [--audio <plik|brak>] [--bez-dociagania] \\
         [--markery <plik.srt|brak>] [--fade 1.5] [--ekran-koncowy 20]
 
 Domyślnie zapisuje do `render/timeline_edytowalny_fcp7.xml` w folderze utworu —
@@ -123,10 +128,10 @@ DEFAULT_ZOOM_KLATEK = 25       # ile klatek kluczowych próbkuje krzywą wygład
 DEFAULT_PRZEJSCIE_SEC = 2.5    # Cross Dissolve na każdym cięciu (decyzja użytkownika 2026-08-01)
 DEFAULT_FADE_SEC = 1.5         # wejście z czerni i zejście do czerni na krańcach osi
 DEFAULT_EKRAN_KONCOWY_SEC = 20.0   # marker pod ekran końcowy YouTube, tyle przed końcem
-DEFAULT_AUDIO_FADE_SEC = 0.0   # wyciszenie audio — domyślnie OFF, patrz uwaga w `audio_xml`
 DEFAULT_NAZWA = "Auto Timeline"
 PLIK_KIERUNKOW = "kierunki-ruchu.tsv"
-# Kolejność preferencji pliku audio: master v3 (profil domyślny od 2026-08-09), potem
+# Kolejność preferencji pliku audio (tylko do pomiaru długości i dociągnięcia ostatniego
+# kadru — na oś NIE trafia, patrz nagłówek): master v3 (profil domyślny od 2026-08-09), potem
 # starszy v2, a surowy plik z Suno na końcu — ten ostatni nie przeszedł Etapu 1A,
 # więc jego użycie generator zgłasza jako ostrzeżenie.
 KANDYDACI_AUDIO = ("audio_eq_v3.wav", "audio_eq_v2.wav", "audio.wav")
@@ -348,7 +353,7 @@ def folder_utworu(katalog):
 
 
 def znajdz_audio(katalog, wskazany=None):
-    """Ścieżka do pliku audio na oś czasu + ostrzeżenie, gdy to nie jest master v3."""
+    """Ścieżka do pliku audio (tylko kontrola długości osi) + ostrzeżenie, gdy to nie master v3."""
     if wskazany:
         if not os.path.exists(wskazany):
             sys.exit(f"Nie ma pliku audio: {wskazany}")
@@ -400,83 +405,6 @@ def dlugosc_audio(sciezka, fps):
     ramki = bajtow_danych // (kanaly * (bity // 8))
     sek = ramki / sr
     return int(round(sek * fps)), sek, f"{sr} Hz / {bity} bit / {kanaly} kan."
-
-
-def audio_xml(sciezka, klatek_audio, rate, fade_klatek=0):
-    """Ścieżka audio zaczepiona na klatce 0, jako `<clipitem>` w `<audio><track>`.
-
-    Bez tego audio wrzuca się do Resolve ręcznie i ręcznie dosuwa do zera — a wtedy
-    nietrafienie o kilka klatek nie rzuca się w oczy, bo obraz i tak zmienia się
-    tylko co kilkanaście sekund.
-
-    Stereo idzie jako JEDEN klip z `channelcount 2`, nie jako dwie ścieżki mono
-    (tak robił FCP7) — Resolve wiąże to w jeden klip stereo.
-
-    `fade_klatek` dokłada filtr „Audio Levels" z klatkami kluczowymi wyciszenia.
-    DOMYŚLNIE WYŁĄCZONE: w odróżnieniu od `Basic Motion` i `Cross Dissolve` ten filtr
-    nie był u nas jeszcze sprawdzony w imporcie, a przy jego zignorowaniu przez Resolve
-    zostajesz z tym samym, co dziś (ręczne wyciszenie). Włącz `--audio-fade`, sprawdź
-    na osi i dopiero wtedy warto zmienić domyślną wartość.
-    """
-    nazwa = os.path.basename(sciezka)
-    filtr = ""
-    if fade_klatek:
-        kf = [(0, 0.0), (fade_klatek, 1.0),
-              (klatek_audio - fade_klatek, 1.0), (klatek_audio, 0.0)]
-        wpisy = "\n".join(
-            f"                                        <keyframe>\n"
-            f"                                            <when>{w}</when>\n"
-            f"                                            <value>{v:.4f}</value>\n"
-            f"                                        </keyframe>" for w, v in kf)
-        filtr = f"""
-                            <filter>
-                                <effect>
-                                    <name>Audio Levels</name>
-                                    <effectid>audiolevels</effectid>
-                                    <effectcategory>audiolevels</effectcategory>
-                                    <effecttype>audiolevels</effecttype>
-                                    <mediatype>audio</mediatype>
-                                    <parameter>
-                                        <parameterid>level</parameterid>
-                                        <name>Level</name>
-                                        <valuemin>0</valuemin>
-                                        <valuemax>3.98107</valuemax>
-                                        <value>1</value>
-{wpisy}
-                                    </parameter>
-                                </effect>
-                            </filter>"""
-    return f"""            <audio>
-                <track>
-                    <clipitem id="clipitem-audio-1">
-                        <name>{nazwa}</name>
-                        <enabled>TRUE</enabled>
-                        <duration>{klatek_audio}</duration>
-                        {rate}
-                        <start>0</start>
-                        <end>{klatek_audio}</end>
-                        <in>0</in>
-                        <out>{klatek_audio}</out>
-                        <file id="file-audio-1">
-                            <name>{nazwa}</name>
-                            <pathurl>{url_pliku(sciezka)}</pathurl>
-                            <duration>{klatek_audio}</duration>
-                            {rate}
-                            <media>
-                                <audio>
-                                    <channelcount>2</channelcount>
-                                </audio>
-                            </media>
-                        </file>
-                        <sourcetrack>
-                            <mediatype>audio</mediatype>
-                            <trackindex>1</trackindex>
-                        </sourcetrack>{filtr}
-                    </clipitem>
-                    <enabled>TRUE</enabled>
-                    <locked>FALSE</locked>
-                </track>
-            </audio>"""
 
 
 def wczytaj_napisy(katalog, fps, sciezka=None):
@@ -580,8 +508,7 @@ def zbuduj_xmeml(kadry, katalog, fps, width, height, handle_sec, nazwa_projektu,
                  zoom_proc=DEFAULT_ZOOM_PROC, zoom_klatek=DEFAULT_ZOOM_KLATEK,
                  pan_proc=DEFAULT_PAN_PROC, kierunki=None,
                  zoom_ref_sec=DEFAULT_ZOOM_REF_SEC, zoom_min_proc=DEFAULT_ZOOM_MIN_PROC,
-                 uzyte_zoomy=None, przejscie_sec=0.0, audio=None, klatek_audio=0,
-                 audio_fade_klatek=0, markery=None, fade_sec=0.0):
+                 uzyte_zoomy=None, przejscie_sec=0.0, markery=None, fade_sec=0.0):
     handle = handle_sec * fps
     total = kadry[-1][1] if kadry else 0
     kierunki = kierunki or {}
@@ -652,7 +579,6 @@ def zbuduj_xmeml(kadry, katalog, fps, width, height, handle_sec, nazwa_projektu,
         elementy.insert(0, fade_xml(0, dl_fade, rate, "start-black"))
         elementy.append(fade_xml(total - dl_fade, total, rate, "end-black"))
 
-    sekcja_audio = ("\n" + audio_xml(audio, klatek_audio, rate, audio_fade_klatek)) if audio else ""
     sekcja_markerow = ("\n" + markery_xml(markery)) if markery else ""
 
     return f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -676,7 +602,7 @@ def zbuduj_xmeml(kadry, katalog, fps, width, height, handle_sec, nazwa_projektu,
                     <enabled>TRUE</enabled>
                     <locked>FALSE</locked>
                 </track>
-            </video>{sekcja_audio}
+            </video>
         </media>{sekcja_markerow}
     </sequence>
 </xmeml>
@@ -715,17 +641,14 @@ def main():
                          f"(domyślnie {DEFAULT_PRZEJSCIE_SEC})")
     ap.add_argument("--kierunki", help=f"plik ze stronami ruchu "
                                        f"(domyślnie <images>/{PLIK_KIERUNKOW}, jeśli istnieje)")
-    ap.add_argument("--audio", help=f"plik audio na oś czasu; domyślnie pierwszy istniejący "
-                                    f"z audio/: {', '.join(KANDYDACI_AUDIO)}. "
-                                    f"„brak\" nie wstawia audio")
+    ap.add_argument("--audio", help=f"plik audio do kontroli długości osi i dociągnięcia "
+                                    f"ostatniego kadru (na oś NIE trafia); domyślnie pierwszy "
+                                    f"istniejący z audio/: {', '.join(KANDYDACI_AUDIO)}. "
+                                    f"„brak\" pomija analizę audio")
     ap.add_argument("--bez-dociagania", dest="dociagnij", action="store_false",
                     help="nie przedłużaj ostatniego kadru do końca audio (domyślnie "
                          "przedłuża, gdy brakuje mniej niż sekunda — inaczej render "
                          "wychodzi o kilkanaście klatek dłuższy niż oś)")
-    ap.add_argument("--audio-fade", type=float, default=DEFAULT_AUDIO_FADE_SEC,
-                    help=f"wyciszenie audio na krańcach, w sekundach (domyślnie "
-                         f"{DEFAULT_AUDIO_FADE_SEC:.0f} = wyłączone — filtr Audio Levels "
-                         f"nie był jeszcze sprawdzony w imporcie do Resolve)")
     ap.add_argument("--markery", help=f"plik SRT na markery nawigacyjne (domyślnie "
                                       f"txt/{PLIK_NAPISOW}, jeśli istnieje). „brak\" wyłącza")
     ap.add_argument("--fade", type=float, default=DEFAULT_FADE_SEC,
@@ -815,14 +738,15 @@ def main():
         audio_plik, uwaga = znajdz_audio(katalog, args.audio)
         if not audio_plik:
             print(f"audio: nie znalazłem żadnego z {', '.join(KANDYDACI_AUDIO)} w audio/ — "
-                  f"oś powstanie bez ścieżki audio", file=sys.stderr)
+                  f"pomijam kontrolę długości względem dźwięku", file=sys.stderr)
         else:
             klatek_audio, sek_audio, opis = dlugosc_audio(audio_plik, args.fps)
             if uwaga:
                 print(f"  UWAGA: {uwaga}", file=sys.stderr)
             brak_klatek = klatek_audio - total
             roznica = brak_klatek / args.fps
-            print(f"audio: {os.path.basename(audio_plik)} ({opis}), "
+            print(f"audio (tylko kontrola długości, na oś nie trafia): "
+                  f"{os.path.basename(audio_plik)} ({opis}), "
                   f"{sek_audio:.3f} s = {klatek_audio} klatek")
             # Nazwy kadrów z Etapu 5 mają rozdzielczość jednej sekundy, więc ostatni kadr
             # prawie nigdy nie kończy się dokładnie tam, gdzie audio — zostaje ogon rzędu
@@ -876,8 +800,7 @@ def main():
     tresc = zbuduj_xmeml(kadry, katalog, args.fps, args.width, args.height,
                          args.handle, args.name, args.zoom, args.zoom_klatek,
                          args.pan, kierunki, args.zoom_ref, args.zoom_min, uzyte,
-                         args.przejscia, audio_plik, klatek_audio,
-                         int(round(args.audio_fade * args.fps)), markery, args.fade)
+                         args.przejscia, markery, args.fade)
     os.makedirs(os.path.dirname(wyjscie), exist_ok=True)
     with open(wyjscie, "w", encoding="utf-8") as fh:
         fh.write(tresc)

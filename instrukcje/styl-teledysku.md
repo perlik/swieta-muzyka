@@ -10,6 +10,7 @@
 
 > **Struktura instrukcji:** ten plik jest spisem wszystkich 7 etapów ze streszczeniem i zasadami wspólnymi (rozdzielczość). Szczegóły każdego etapu są wydzielone do osobnych plików, żeby sesja pracująca nad jednym etapem nie musiała wczytywać całości:
 > - Etap 1 (lyrics): `instrukcje/etap1-lyrics.md`
+> - Etap 1 — wariant dla pieśni uwielbienia pisanych od zera (nie parafraz psalmów): `instrukcje/etap1-lyrics-uwielbienie.md`
 > - Etap 1A (master audio: EQ, de-esser, normalizacja): `instrukcje/etap1a-audio-master.md`
 > - Etap 2 (napisy): `instrukcje/etap2-napisy.md`
 > - Etap 3 (prompty do obrazków, cały styl wizualny): `instrukcje/etap3-prompty-stylu.md`
