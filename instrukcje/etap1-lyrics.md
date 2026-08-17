@@ -86,7 +86,9 @@ Jedno–dwa celne wykluczenia działają lepiej niż długa lista (za dużo wykl
 
 Nie podkręcać Weirdness powyżej ~55% ani nie luzować Style Influence poniżej ~60% bez wyraźnego powodu; przy iterowaniu zmieniać **jeden suwak na raz**, żeby było wiadomo, co wpłynęło na wynik.
 
-**Persona (spójny głos serii).** Suno pozwala zapisać głos/klimat udanego utworu jako Personę i używać jej we wszystkich kolejnych generacjach — dla kanału opartego na jednym żeńskim wokalu to najskuteczniejsze narzędzie spójności brzmienia (słuchacze kojarzą „ten głos" z kanałem). Rekomendowany krok: wybrać spośród opublikowanych psalmów utwór z najlepszym, najbardziej reprezentatywnym wokalem, utworzyć z niego Personę (… → Create → Make Persona, ustawić jako **prywatną**) i od tej pory generować wszystkie nowe psalmy z tą Personą (Persona wypełnia pole Style — sprawdzić, czy nasze frazy nienaruszalne pozostały w mocy). **Wybór utworu-źródła należy do użytkownika** — przy najbliższym Etapie 1 zapytać, czy chce Personę założyć i z którego psalmu.
+**Persona (spójny głos serii).** Suno pozwala zapisać głos/klimat udanego utworu jako Personę i używać jej we wszystkich kolejnych generacjach — dla kanału opartego na jednym żeńskim wokalu to najskuteczniejsze narzędzie spójności brzmienia (słuchacze kojarzą „ten głos" z kanałem). Personę tworzy się w Suno ręcznie: … → Create → Make Persona, ustawić jako **prywatną**.
+
+**Decyzja użytkownika (2026-08-04): Persona serii powstaje z Psalmu 34.** Od tej pory wszystkie nowe psalmy generujemy z tą Personą. Persona wypełnia pole Style, więc przy każdej generacji sprawdzić, czy nasze frazy nienaruszalne (patrz wyżej) nadal obowiązują — jeśli Persona je nadpisuje, dopisać je z powrotem. Plik `style.txt` w folderze utworu zakładamy dalej bez wyjątku, zapisując dokładnie to, co finalnie poszło do Suno.
 
 ## Praktyka generowania
 

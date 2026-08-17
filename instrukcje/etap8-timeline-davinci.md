@@ -26,6 +26,7 @@ Metoda przeniesiona z projektu „Holy Creator" (`/Volumes/ADATA SE880/Holy Crea
 2. **Kierunek zmienia się co kadr** (najazd / odjazd na przemian). Gdyby wszystkie kadry jechały w tę samą stronę, po kilku minutach widz widzi mechanikę.
 3. **Wielkość najazdu skaluje się długością kadru** (`--zoom-ref`, domyślnie 12 s). Stała wartość daje ruch o tempie odwrotnie proporcjonalnym do długości ujęcia: te same 25% to 2,1%/s na kadrze 12-sekundowym (spokojnie) i 6,3%/s na 4-sekundowym (szarpnięcie). Zoom liczony jest jako `zoom × długość / ref`, przycięty z góry do `--zoom` i z dołu do `--zoom-min`.
 4. **Panorama sprzężona z zoomem, nie niezależna.** Przesunięcie w bok w każdej klatce to stały ułamek zapasu, jaki daje **aktualne** powiększenie, więc przy skali 100% wynosi dokładnie zero i **czarny pas przy krawędzi nie może wejść w kadr w żadnym momencie ruchu**. Znak jest odwrotny do intuicji: `center` przesuwa obraz, a nie okno kadru, więc motyw po lewej → `horiz` rośnie dodatnio.
+5. **Panorama jest opcjonalna — kadr z motywem w osi dostaje sam najazd.** Wpis `srodek` gasi ruch w bok dla tego jednego kadru (skrypt nie wypisuje wtedy parametru `center`, zostają same klatki `Scale`). Zoom zostaje bez zmian, więc kadr nie wypada z rytmu najazd/odjazd.
 
 **W tym projekcie ruch dostają wszystkie kadry.** W „Holy Creator" generator pomija karty tekstowe (najazd na kartę miękczy litery), ale u nas kart nie ma — napisy wchodzą jako SRT z Etapu 2, nie jako kadry.
 
@@ -33,26 +34,32 @@ Metoda przeniesiona z projektu „Holy Creator" (`/Volumes/ADATA SE880/Holy Crea
 
 **Plik kierunków zakładamy przy każdym utworze, zawsze, przed wygenerowaniem osi czasu** (decyzja użytkownika 2026-08-01). Nie pytamy, czy go tworzyć, i nie zostawiamy wszystkich kadrów na „auto" — trzeba **obejrzeć każdy kadr** i wpisać stronę. Bez tego panorama jedzie na przemian niezależnie od kompozycji, czyli w połowie kadrów odjeżdża od motywu zamiast na niego najeżdżać.
 
-**Strony nie da się wykryć automatycznie.** Na akwareli detal tła (rozświetlone niebo, aureola, brama światła przy krawędzi) bywa mocniejszy niż motyw główny, więc środek ciężkości kontrastu myli się o jakieś 40% kadrów. Plik `kierunki-ruchu.tsv` leży **obok obrazków** (w tym samym katalogu, który podajemy skryptowi). Format: `nazwa-pliku<TAB>lewo|prawo|auto`, `#` zaczyna komentarz:
+**Strony nie da się wykryć automatycznie.** Na akwareli detal tła (rozświetlone niebo, aureola, brama światła przy krawędzi) bywa mocniejszy niż motyw główny, więc środek ciężkości kontrastu myli się o jakieś 40% kadrów. Plik `kierunki-ruchu.tsv` leży **obok obrazków** (w tym samym katalogu, który podajemy skryptowi). Format: `nazwa-pliku<TAB>lewo|prawo|srodek|auto`, `#` zaczyna komentarz:
 
 ```
 0m00s-0m16s.jpg	prawo	# psalmistka przy prawej krawędzi kadru
 2m18s-2m32s.jpg	lewo	# ścieżka wchodzi w kadr od lewej
-3m27s-3m38s.jpg	auto	# abstrakcja symetryczna, nie ma na co jechać
+2m49s-3m03s.jpg	srodek	# schody światła na osi kadru - najazd w oś, bez ruchu w bok
+3m27s-3m38s.jpg	auto	# nie ma wyraźnego motywu, obojętne w którą stronę
 ```
 
-`auto` używamy **świadomie**, nie z lenistwa: dla kompozycji symetrycznych i motywów dokładnie w centrum, gdzie nie ma na co jechać (snop światła na osi, symetryczne skrzydła, radialna abstrakcja). Takie kadry dostają strony na przemian. Wpisy `auto` warto opatrzyć komentarzem, dlaczego kadr jest symetryczny — inaczej po miesiącu nie widać, czy to decyzja, czy przeoczenie.
+**`srodek` — motyw na osi kadru (reguła użytkownika 2026-08-06).** Zbliżenie nie musi iść w lewo albo w prawo: bardzo często główny element siedzi **na środku obrazka** (kompozycja symetryczna, schody albo filar/snop światła w centrum, radialna abstrakcja, korona w osi kadru). Taki kadr dostaje wpis `srodek` — czysty najazd w oś obrazu, bez żadnej panoramy. Wcześniej takie kadry szły na `auto`, czyli i tak odjeżdżały w losową stronę od motywu; to był błąd. **Wybór „lewo/prawo" ma sens tylko wtedy, gdy motyw naprawdę siedzi przy którejś krawędzi.**
 
-Orientacyjny rozkład z Psalmu 121 (29 kadrów): 7 `prawo`, 6 `lewo`, 16 `auto`. Jeśli w jakimś utworze wychodzi prawie samo `auto`, to znak, że kadry nie zostały obejrzane uważnie.
+`auto` (strony na przemian) zostaje tylko dla kadrów, w których nie ma ani motywu przy krawędzi, ani motywu w osi — rozmyta faktura, pejzaż bez akcentu, gdzie kierunek ruchu jest obojętny. Jeśli w jakimś utworze wychodzi prawie samo `auto`, to znak, że kadry nie zostały obejrzane uważnie.
 
 Jak wybierać stronę:
 
 - **Motyw wyraźnie przy krawędzi** (lampa po prawej, dom po lewej, psalmistka przy prawej krawędzi) → ta strona.
 - **Droga/ścieżka wchodząca w kadr z jednej strony albo zakręcająca** → strona, do której prowadzi.
-- **Kadr finałowy** → strona, po której leży akcent wizualny; ruch w tę stronę zostawia środek i prawą część kadru czyste pod ekran końcowy YouTube.
-- **Motyw w centrum albo kompozycja symetryczna** → `auto`.
+- **Kadr finałowy** → strona, po której leży akcent wizualny; ruch w tę stronę zostawia środek i prawą część kadru czyste pod ekran końcowy YouTube. Gdy akcent finału siedzi w osi — `srodek`.
+- **Motyw w centrum albo kompozycja symetryczna** → `srodek` (najazd w oś, bez panoramy).
+- **Brak wyraźnego motywu w ogóle** → `auto`.
+
+**Prosty próg, gdy kadr jest niejednoznaczny:** patrzymy, gdzie leży środek głównego motywu w szerokości kadru. Poniżej ~43% → `lewo`, powyżej ~57% → `prawo`, między nimi → `srodek`. Kilka procent od osi to za mało, żeby panorama miała na co jechać, a widz i tak odbierze taki ruch jako zjeżdżanie z motywu.
 
 To jedyny krok tego etapu wymagający oceny treści kadru — i jedyny, którego nie da się zautomatyzować.
+
+Typowy rozkład zależy od utworu: w Psalmie 8 (25 kadrów) wyszło 6 `prawo`, 1 `lewo`, 18 `srodek` — obrazy z Leonardo są w tym filmie mocno osiowe (schody, brama, serce, tarcza światła), więc przewaga `srodek` jest uczciwa, nie jest oznaką pobieżnego przeglądu. Sygnałem pobieżnego przeglądu jest natomiast przewaga `auto`.
 
 **Po każdej zmianie audio** (nazwy plików niosą czas, więc się przeliczają) plik trzeba zaktualizować. Generator wypisuje ostrzeżenie o wpisach wskazujących nieistniejące kadry — to najczęstszy sygnał, że kierunki rozjechały się po zmianie długości nagrania.
 
@@ -88,8 +95,61 @@ Plik wynikowy trafia domyślnie do `render/timeline_edytowalny_fcp7.xml` w folde
 | `--pan` | 6 (%) | przesunięcie w bok w skrajnym punkcie, w % szerokości kadru; `0` zostawia sam zoom |
 | `--przejscia` | 2.5 s | Cross Dissolve na każdym cięciu; `0` wyłącza |
 | `--kierunki` | `<images>/kierunki-ruchu.tsv` | plik ze stronami ruchu |
+| `--audio` | pierwszy istniejący z `audio/` | plik audio na oś czasu; `brak` nie wstawia |
+| `--bez-dociagania` | — | nie przedłużaj ostatniego kadru do końca audio |
+| `--audio-fade` | 0 (wyłączone) | wyciszenie audio na krańcach, w sekundach |
+| `--markery` | `txt/napisy.srt` | plik SRT na markery; `brak` wyłącza |
+| `--fade` | 1.5 s | wejście z czerni i zejście do czerni; `0` wyłącza |
+| `--ekran-koncowy` | 20 s | marker pod ekran końcowy YouTube, tyle przed końcem |
 
 Wartości 25% zoomu i 6% panu są przeniesione z „Holy Creator", gdzie ustalono je po odsłuchu gotowej osi — wcześniejsze 5-8% zoomu było na gotowym filmie praktycznie niewidoczne. `--pan` powyżej `zoom/4` daje ostrzeżenie, powyżej `zoom/2` skrypt przerywa (przesunięcie nie zmieściłoby się w zapasie i w kadrze pokazałby się czarny pas).
+
+## Audio na osi czasu (od 2026-08-09)
+
+Skrypt wstawia ścieżkę audio sam — nie trzeba jej wrzucać ręcznie ani dosuwać do zera.
+Bierze **pierwszy istniejący** plik z `audio/` w kolejności `audio_eq_v3.wav` →
+`audio_eq_v2.wav` → `audio.wav` i wypisuje ostrzeżenie, gdy trafił na coś innego niż
+master v3 (np. surowy plik z Suno, czyli Etap 1A nieodrobiony). Stereo idzie jako jeden
+klip z `channelcount 2`, a nie dwie ścieżki mono, jak robił FCP7.
+
+### Dociągnięcie ostatniego kadru do końca audio
+
+**To rozwiązuje realny problem, nie jest kosmetyką.** Nazwy kadrów z Etapu 5 mają
+rozdzielczość jednej sekundy, więc oś kończy się ułamek sekundy **przed** audio.
+Resolve renderuje do dłuższego ze strumieni, czyli do dźwięku, i w wyeksportowanym
+pliku zostaje ogon kilkunastu klatek obrazu z ostatniego kadru. Przy Psalmie 119 było
+to dokładnie **18 klatek** (oś 403,000 s, audio 403,305 s) i skończyło się próbą
+docinania gotowego, 3-gigabajtowego pliku wideo — operacją, która trwa dłużej niż
+ponowny render.
+
+Dlatego, gdy audio wystaje o mniej niż sekundę, skrypt przedłuża ostatni kadr do końca
+dźwięku i wypisuje o ile. Rozjazd większy niż 0,5 s w drugą stronę (albo większy niż
+sekunda) to już nie zaokrąglenie, tylko błąd w nazwach z Etapu 5 albo przycięte audio —
+wtedy leci ostrzeżenie zamiast cichej korekty. Wyłącznik: `--bez-dociagania`.
+
+## Markery z napisów
+
+Skrypt czyta `txt/napisy.srt` z Etapu 2 i stawia marker na starcie każdej linijki,
+z jej tekstem jako nazwą. Dzięki temu kontrola „czy kadr pasuje do tego, co w tym
+momencie leci" sprowadza się do przewijania osi, zamiast odsłuchiwania całości.
+Dokładany jest też marker `EKRAN KOŃCOWY YouTube` na 20 s przed końcem
+(`--ekran-koncowy`).
+
+## Fade z czerni i do czerni
+
+`--fade` (domyślnie 1,5 s) dokłada Cross Dissolve na obu krańcach osi, z wyrównaniem
+`start-black` i `end-black`. Te warianty nie potrzebują zapasu z sąsiedniego klipu —
+którego na krańcach osi po prostu nie ma — bo przenikają z czerni i do czerni.
+Skrypt przerywa, gdyby fade był dłuższy niż połowa najkrótszego kadru.
+
+## Czego przez XML zrobić się NIE da
+
+- **Napisów** — XMEML v5 nie ma na nie miejsca. Zostaje `File → Import → Subtitle`.
+- **Ustawień eksportu i kolejki renderowania** — poza formatem.
+
+Jedno i drugie da się zautomatyzować skryptem przez API Resolve
+(`DaVinciResolveScript`, Python, wbudowane w Resolve), ale to inna konstrukcja niż
+ten generator i wymaga otwartego Resolve'a.
 
 ## Przejścia: Cross Dissolve 2,5 s na każdym cięciu
 

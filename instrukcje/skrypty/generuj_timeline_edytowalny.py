@@ -38,11 +38,17 @@ szarpią. Zoom liczony jest jako `zoom × długość / ref`, przycięty z góry 
 
 `--pan` (domyślnie 6% szerokości kadru) dokłada ruch w bok: kadr jedzie w stronę,
 po której siedzi główny motyw. Stronę bierzemy z pliku `kierunki-ruchu.tsv`
-leżącego obok obrazków (`nazwa-pliku<TAB>lewo|prawo|auto`, `auto` = strony na
-przemian); gdy pliku nie ma, wszystkie kadry idą „auto". Automatycznego wykrywania
-strony nie ma i nie będzie — na akwareli detal tła (rozświetlone niebo, aureola,
-brama światła przy krawędzi) bywa mocniejszy niż motyw główny, więc środek
-ciężkości kontrastu myli się o jakieś 40% kadrów.
+leżącego obok obrazków (`nazwa-pliku<TAB>lewo|prawo|srodek|auto`, `srodek` = sam
+zoom w oś kadru bez ruchu w bok, `auto` = strony na przemian); gdy pliku nie ma,
+wszystkie kadry idą „auto". Automatycznego wykrywania strony nie ma i nie będzie —
+na akwareli detal tła (rozświetlone niebo, aureola, brama światła przy krawędzi)
+bywa mocniejszy niż motyw główny, więc środek ciężkości kontrastu myli się o jakieś
+40% kadrów.
+
+`srodek` jest dla kadrów, w których główny motyw siedzi **na osi obrazka** — kompozycja
+symetryczna, schody/filar/snop światła w centrum, radialna abstrakcja. Panorama w bok
+odjeżdżałaby wtedy od motywu w jedną albo drugą stronę, więc zamiast wybierać mniejsze zło
+zostaje czysty najazd na środek.
 
 **Pan jest sprzężony z zoomem, nie niezależny** — przesunięcie w każdej klatce jest
 stałym ułamkiem zapasu, jaki daje aktualne powiększenie. Dzięki temu w klatce
@@ -55,11 +61,34 @@ Uwaga: w tym projekcie WSZYSTKIE kadry są ilustracjami, więc ruch dostaje każ
 z nich. (W „Holy Creator" generator pomija karty tekstowe — tutaj nie ma czego
 pomijać, bo napisy wchodzą jako napisy SRT z Etapu 2, nie jako kadry.)
 
+CO JESZCZE TRAFIA NA OŚ (dodane 2026-08-09, żeby zdjąć ręczne kroki po imporcie):
+
+* **Audio** — pierwszy istniejący plik z `audio/` (kolejność: `audio_eq_v3.wav`,
+  `audio_eq_v2.wav`, `audio.wav`) ląduje na ścieżce audio zaczepiony na klatce 0.
+  Skrypt porównuje jego długość z długością osi i, gdy audio wystaje o mniej niż
+  sekundę, **dociąga ostatni kadr do końca dźwięku**. To nie kosmetyka: nazwy kadrów
+  z Etapu 5 mają rozdzielczość jednej sekundy, więc oś kończy się ułamek sekundy przed
+  audio, Resolve renderuje do dłuższego strumienia i w gotowym pliku zostaje ogon
+  kilkunastu klatek (Psalm 119: 18 klatek). Wyłącznik: `--bez-dociagania`.
+* **Markery** z `txt/napisy.srt` — jeden na starcie każdej linijki, z jej tekstem jako
+  nazwą, plus marker `EKRAN KOŃCOWY YouTube` na `--ekran-koncowy` sekund przed końcem.
+  Pozwala sprawdzić „czy kadr pasuje do tego, co leci" przewijając oś zamiast
+  odsłuchiwać całość.
+* **Fade z czerni i do czerni** (`--fade`, domyślnie 1.5 s) na krańcach osi, jako
+  Cross Dissolve z wyrównaniem `start-black` / `end-black` — te warianty nie potrzebują
+  zapasu z sąsiada, którego na krańcach nie ma.
+
+Czego przez XMEML v5 zrobić NIE można: napisów (Resolve importuje SRT osobno przez
+File → Import → Subtitle) ani ustawień eksportu. Jedno i drugie dałoby się zrobić
+skryptem przez API Resolve, ale to inna konstrukcja niż ten generator.
+
 Użycie:
     python3 generuj_timeline_edytowalny.py <katalog images/> \\
         [--out <plik.xml>] [--fps 60] [--name "..."] [--handle 10] \\
         [--zoom 25] [--zoom-ref 12] [--zoom-min 6] [--pan 6] \\
-        [--kierunki <plik.tsv>] [--zoom-klatek 25] [--width 2560] [--height 1440]
+        [--kierunki <plik.tsv>] [--zoom-klatek 25] [--width 2560] [--height 1440] \\
+        [--audio <plik|brak>] [--audio-fade 0] [--bez-dociagania] \\
+        [--markery <plik.srt|brak>] [--fade 1.5] [--ekran-koncowy 20]
 
 Domyślnie zapisuje do `render/timeline_edytowalny_fcp7.xml` w folderze utworu —
 skrypt szuka istniejącego katalogu `render/` w katalogach nadrzędnych względem
@@ -92,8 +121,21 @@ DEFAULT_ZOOM_MIN_PROC = 6.0    # dolna granica najazdu dla krótkich kadrów
 DEFAULT_PAN_PROC = 6.0         # przesunięcie w bok na końcu ruchu, w % szerokości kadru
 DEFAULT_ZOOM_KLATEK = 25       # ile klatek kluczowych próbkuje krzywą wygładzenia
 DEFAULT_PRZEJSCIE_SEC = 2.5    # Cross Dissolve na każdym cięciu (decyzja użytkownika 2026-08-01)
+DEFAULT_FADE_SEC = 1.5         # wejście z czerni i zejście do czerni na krańcach osi
+DEFAULT_EKRAN_KONCOWY_SEC = 20.0   # marker pod ekran końcowy YouTube, tyle przed końcem
+DEFAULT_AUDIO_FADE_SEC = 0.0   # wyciszenie audio — domyślnie OFF, patrz uwaga w `audio_xml`
 DEFAULT_NAZWA = "Auto Timeline"
 PLIK_KIERUNKOW = "kierunki-ruchu.tsv"
+# Kolejność preferencji pliku audio: master v3 (profil domyślny od 2026-08-09), potem
+# starszy v2, a surowy plik z Suno na końcu — ten ostatni nie przeszedł Etapu 1A,
+# więc jego użycie generator zgłasza jako ostrzeżenie.
+KANDYDACI_AUDIO = ("audio_eq_v3.wav", "audio_eq_v2.wav", "audio.wav")
+PLIK_NAPISOW = "napisy.srt"
+WZORZEC_SRT = re.compile(
+    r"(\d{2}):(\d{2}):(\d{2})[,.](\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2})[,.](\d{3})")
+# wpisy dopuszczalne w kierunki-ruchu.tsv; „środek"/„centrum" to wygodne warianty zapisu
+ALIASY_STRON = {"lewo": "lewo", "prawo": "prawo", "auto": "auto",
+                "srodek": "srodek", "środek": "srodek", "centrum": "srodek"}
 PLIK_WYJSCIOWY = "timeline_edytowalny_fcp7.xml"
 WZORZEC = re.compile(r"(\d+)m(\d+)s-(\d+)m(\d+)s")
 ROZSZERZENIA = (".png", ".jpg", ".jpeg", ".tif", ".tiff")
@@ -169,9 +211,11 @@ def sprawdz_ciaglosc(kadry, fps):
 def wczytaj_kierunki(katalog, sciezka=None):
     """Strona, w którą ma jechać kadr, z pliku `kierunki-ruchu.tsv` obok obrazków.
 
-    Format: `nazwa-pliku<TAB>lewo|prawo|auto`, `#` zaczyna komentarz. „lewo"/„prawo"
-    mówi, po której stronie kadru siedzi główny motyw — tam pojedzie kadr. „auto"
-    (i każdy plik bez wpisu) dostaje strony na przemian.
+    Format: `nazwa-pliku<TAB>lewo|prawo|srodek|auto`, `#` zaczyna komentarz. „lewo"/„prawo"
+    mówi, po której stronie kadru siedzi główny motyw — tam pojedzie kadr. „srodek"
+    znaczy, że motyw siedzi na osi kadru (kompozycja symetryczna, schody albo snop
+    światła w centrum): kadr dostaje sam najazd, bez ruchu w bok. „auto" (i każdy plik
+    bez wpisu) dostaje strony na przemian.
 
     Pliku nie da się wygenerować automatycznie — stronę wpisuje się z obejrzenia
     kadrów. Po każdej zmianie audio (nazwy plików niosą czas) trzeba go zaktualizować;
@@ -187,9 +231,11 @@ def wczytaj_kierunki(katalog, sciezka=None):
             if not linia:
                 continue
             czesci = [c.strip() for c in linia.split("\t") if c.strip()]
-            if len(czesci) != 2 or czesci[1].lower() not in ("lewo", "prawo", "auto"):
-                sys.exit(f"{plik}:{nr}: oczekiwano „nazwa<TAB>lewo|prawo|auto\", jest: {linia}")
-            kierunki[czesci[0]] = czesci[1].lower()
+            strona = ALIASY_STRON.get(czesci[1].lower()) if len(czesci) == 2 else None
+            if strona is None:
+                sys.exit(f"{plik}:{nr}: oczekiwano „nazwa<TAB>lewo|prawo|srodek|auto\", "
+                         f"jest: {linia}")
+            kierunki[czesci[0]] = strona
     return kierunki, plik
 
 
@@ -290,6 +336,215 @@ def filtr_ruchu(dlugosc, handle, zoom_proc, pan_proc, klatek, do_srodka, znak_pa
                             </filter>"""
 
 
+def folder_utworu(katalog):
+    """Folder psalmu (ten z `audio/`, `txt/`, `render/`) — kadry bywają w podfolderze."""
+    biezacy = katalog
+    for _ in range(3):
+        rodzic = os.path.dirname(biezacy)
+        if os.path.isdir(os.path.join(rodzic, "audio")) or os.path.isdir(os.path.join(rodzic, "txt")):
+            return rodzic
+        biezacy = rodzic
+    return os.path.dirname(katalog)
+
+
+def znajdz_audio(katalog, wskazany=None):
+    """Ścieżka do pliku audio na oś czasu + ostrzeżenie, gdy to nie jest master v3."""
+    if wskazany:
+        if not os.path.exists(wskazany):
+            sys.exit(f"Nie ma pliku audio: {wskazany}")
+        return wskazany, None
+    kat_audio = os.path.join(folder_utworu(katalog), "audio")
+    for nazwa in KANDYDACI_AUDIO:
+        kandydat = os.path.join(kat_audio, nazwa)
+        if os.path.exists(kandydat):
+            uwaga = None
+            if nazwa != KANDYDACI_AUDIO[0]:
+                uwaga = (f"na oś idzie {nazwa}, a nie {KANDYDACI_AUDIO[0]} — "
+                         f"{'to surowy plik z Suno, Etap 1A nie został wykonany' if nazwa == 'audio.wav' else 'to stary profil masteringu v2'}")
+            return kandydat, uwaga
+    return None, None
+
+
+def dlugosc_audio(sciezka, fps):
+    """(klatki, sekundy, opis) dla pliku WAV — z ręcznego przejścia po chunkach RIFF.
+
+    Modułu `wave` ze standardowej biblioteki NIE da się tu użyć: master z Etapu 1A jest
+    24-bitowy, a ffmpeg zapisuje taki plik jako WAVE_FORMAT_EXTENSIBLE (tag 0xFFFE),
+    na którym `wave` wywala się z „unknown format: 65534". Nagłówek RIFF jest prosty,
+    więc czytamy go sami — bez dokładania zależności do skryptu, który poza tym
+    korzysta wyłącznie z biblioteki standardowej.
+    """
+    import struct
+    with open(sciezka, "rb") as fh:
+        naglowek = fh.read(12)
+        if len(naglowek) < 12 or naglowek[:4] != b"RIFF" or naglowek[8:12] != b"WAVE":
+            sys.exit(f"To nie jest plik WAV: {sciezka}")
+        kanaly = sr = bity = bajtow_danych = None
+        while True:
+            naglowek_chunku = fh.read(8)
+            if len(naglowek_chunku) < 8:
+                break
+            ident, rozmiar = struct.unpack("<4sI", naglowek_chunku)
+            if ident == b"fmt ":
+                dane = fh.read(rozmiar)
+                # wspólny prefiks dla PCM i EXTENSIBLE: tag, kanały, sr, byterate, align, bity
+                _, kanaly, sr, _, _, bity = struct.unpack("<HHIIHH", dane[:16])
+            elif ident == b"data":
+                bajtow_danych = rozmiar
+                break                      # `data` jest ostatni, reszty nie musimy czytać
+            else:
+                fh.seek(rozmiar + (rozmiar & 1), os.SEEK_CUR)   # chunki są parzyste
+        if not (kanaly and sr and bity and bajtow_danych):
+            sys.exit(f"Niekompletny nagłówek WAV w {sciezka} "
+                     f"(fmt: {bool(kanaly)}, data: {bool(bajtow_danych)})")
+    ramki = bajtow_danych // (kanaly * (bity // 8))
+    sek = ramki / sr
+    return int(round(sek * fps)), sek, f"{sr} Hz / {bity} bit / {kanaly} kan."
+
+
+def audio_xml(sciezka, klatek_audio, rate, fade_klatek=0):
+    """Ścieżka audio zaczepiona na klatce 0, jako `<clipitem>` w `<audio><track>`.
+
+    Bez tego audio wrzuca się do Resolve ręcznie i ręcznie dosuwa do zera — a wtedy
+    nietrafienie o kilka klatek nie rzuca się w oczy, bo obraz i tak zmienia się
+    tylko co kilkanaście sekund.
+
+    Stereo idzie jako JEDEN klip z `channelcount 2`, nie jako dwie ścieżki mono
+    (tak robił FCP7) — Resolve wiąże to w jeden klip stereo.
+
+    `fade_klatek` dokłada filtr „Audio Levels" z klatkami kluczowymi wyciszenia.
+    DOMYŚLNIE WYŁĄCZONE: w odróżnieniu od `Basic Motion` i `Cross Dissolve` ten filtr
+    nie był u nas jeszcze sprawdzony w imporcie, a przy jego zignorowaniu przez Resolve
+    zostajesz z tym samym, co dziś (ręczne wyciszenie). Włącz `--audio-fade`, sprawdź
+    na osi i dopiero wtedy warto zmienić domyślną wartość.
+    """
+    nazwa = os.path.basename(sciezka)
+    filtr = ""
+    if fade_klatek:
+        kf = [(0, 0.0), (fade_klatek, 1.0),
+              (klatek_audio - fade_klatek, 1.0), (klatek_audio, 0.0)]
+        wpisy = "\n".join(
+            f"                                        <keyframe>\n"
+            f"                                            <when>{w}</when>\n"
+            f"                                            <value>{v:.4f}</value>\n"
+            f"                                        </keyframe>" for w, v in kf)
+        filtr = f"""
+                            <filter>
+                                <effect>
+                                    <name>Audio Levels</name>
+                                    <effectid>audiolevels</effectid>
+                                    <effectcategory>audiolevels</effectcategory>
+                                    <effecttype>audiolevels</effecttype>
+                                    <mediatype>audio</mediatype>
+                                    <parameter>
+                                        <parameterid>level</parameterid>
+                                        <name>Level</name>
+                                        <valuemin>0</valuemin>
+                                        <valuemax>3.98107</valuemax>
+                                        <value>1</value>
+{wpisy}
+                                    </parameter>
+                                </effect>
+                            </filter>"""
+    return f"""            <audio>
+                <track>
+                    <clipitem id="clipitem-audio-1">
+                        <name>{nazwa}</name>
+                        <enabled>TRUE</enabled>
+                        <duration>{klatek_audio}</duration>
+                        {rate}
+                        <start>0</start>
+                        <end>{klatek_audio}</end>
+                        <in>0</in>
+                        <out>{klatek_audio}</out>
+                        <file id="file-audio-1">
+                            <name>{nazwa}</name>
+                            <pathurl>{url_pliku(sciezka)}</pathurl>
+                            <duration>{klatek_audio}</duration>
+                            {rate}
+                            <media>
+                                <audio>
+                                    <channelcount>2</channelcount>
+                                </audio>
+                            </media>
+                        </file>
+                        <sourcetrack>
+                            <mediatype>audio</mediatype>
+                            <trackindex>1</trackindex>
+                        </sourcetrack>{filtr}
+                    </clipitem>
+                    <enabled>TRUE</enabled>
+                    <locked>FALSE</locked>
+                </track>
+            </audio>"""
+
+
+def wczytaj_napisy(katalog, fps, sciezka=None):
+    """[(klatka_startu, tekst)] z `txt/napisy.srt` — na markery nawigacyjne.
+
+    Marker z tekstem linijki w miejscu, gdzie ta linijka zaczyna się śpiewać, pozwala
+    sprawdzić „czy kadr pasuje do tego, co leci" przewijając oś, zamiast odsłuchiwać
+    całość. `napisy.srt` i tak jest gotowy z Etapu 2 i niesie dokładne czasy Whispera.
+    """
+    plik = sciezka or os.path.join(folder_utworu(katalog), "txt", PLIK_NAPISOW)
+    if not os.path.exists(plik):
+        return [], None
+    wpisy = []
+    with open(plik, encoding="utf-8-sig") as fh:
+        blok = fh.read().replace("\r\n", "\n").split("\n\n")
+    for czesc in blok:
+        m = WZORZEC_SRT.search(czesc)
+        if not m:
+            continue
+        h, mi, s, ms = (int(x) for x in m.groups()[:4])
+        klatka = int(round((h * 3600 + mi * 60 + s + ms / 1000) * fps))
+        linie = [l.strip() for l in czesc.split("\n") if l.strip() and not WZORZEC_SRT.search(l)
+                 and not l.strip().isdigit()]
+        tekst = " ".join(linie)
+        if tekst:
+            wpisy.append((klatka, tekst))
+    return wpisy, plik
+
+
+def markery_xml(markery):
+    """`<marker>` na poziomie sekwencji. `out=-1` to marker punktowy, nie zakresowy."""
+    def esc(t):
+        return (t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+    return "\n".join(
+        f"""        <marker>
+            <comment>{esc(komentarz)}</comment>
+            <name>{esc(nazwa)}</name>
+            <in>{klatka}</in>
+            <out>-1</out>
+        </marker>""" for klatka, nazwa, komentarz in markery)
+
+
+def fade_xml(start, end, rate, alignment):
+    """Wejście z czerni / zejście do czerni jako Cross Dissolve przy krawędzi toru.
+
+    `start-black` i `end-black` to warianty wyrównania, w których po drugiej stronie
+    przejścia nie ma klipu, tylko czerń — więc nie potrzebują zapasu z sąsiada
+    (którego na krańcach osi nie ma).
+    """
+    return f"""                        <transitionitem>
+                            <start>{start}</start>
+                            <end>{end}</end>
+                            <alignment>{alignment}</alignment>
+                            {rate}
+                            <effect>
+                                <name>Cross Dissolve</name>
+                                <effectid>Cross Dissolve</effectid>
+                                <effecttype>transition</effecttype>
+                                <mediatype>video</mediatype>
+                                <wipecode>0</wipecode>
+                                <wipeaccuracy>100</wipeaccuracy>
+                                <startratio>0</startratio>
+                                <endratio>1</endratio>
+                                <reverse>FALSE</reverse>
+                            </effect>
+                        </transitionitem>"""
+
+
 def przejscie_xml(start, end, rate):
     """Cross Dissolve na cięciu, jako `<transitionitem>` (FCP7 XMEML).
 
@@ -325,11 +580,13 @@ def zbuduj_xmeml(kadry, katalog, fps, width, height, handle_sec, nazwa_projektu,
                  zoom_proc=DEFAULT_ZOOM_PROC, zoom_klatek=DEFAULT_ZOOM_KLATEK,
                  pan_proc=DEFAULT_PAN_PROC, kierunki=None,
                  zoom_ref_sec=DEFAULT_ZOOM_REF_SEC, zoom_min_proc=DEFAULT_ZOOM_MIN_PROC,
-                 uzyte_zoomy=None, przejscie_sec=0.0):
+                 uzyte_zoomy=None, przejscie_sec=0.0, audio=None, klatek_audio=0,
+                 audio_fade_klatek=0, markery=None, fade_sec=0.0):
     handle = handle_sec * fps
     total = kadry[-1][1] if kadry else 0
     kierunki = kierunki or {}
-    ZNAK = {"lewo": 1, "prawo": -1}      # patrz `filtr_ruchu`: obraz jedzie odwrotnie do okna
+    # patrz `filtr_ruchu`: obraz jedzie odwrotnie do okna; 0 = motyw na osi kadru, sam najazd
+    ZNAK = {"lewo": 1, "prawo": -1, "srodek": 0}
 
     rate = ("<rate>\n"
             f"                                <timebase>{fps}</timebase>\n"
@@ -387,6 +644,17 @@ def zbuduj_xmeml(kadry, katalog, fps, width, height, handle_sec, nazwa_projektu,
             polowa = dl // 2
             elementy.append(przejscie_xml(koniec - polowa, koniec + (dl - polowa), rate))
 
+    # Wejście z czerni i zejście do czerni na krańcach osi. Wstawiane po pętli, bo
+    # `<transitionitem>` muszą stać w torze w kolejności czasowej: fade-in przed
+    # pierwszym klipem, fade-out po ostatnim.
+    if fade_sec and kadry:
+        dl_fade = int(round(fade_sec * fps))
+        elementy.insert(0, fade_xml(0, dl_fade, rate, "start-black"))
+        elementy.append(fade_xml(total - dl_fade, total, rate, "end-black"))
+
+    sekcja_audio = ("\n" + audio_xml(audio, klatek_audio, rate, audio_fade_klatek)) if audio else ""
+    sekcja_markerow = ("\n" + markery_xml(markery)) if markery else ""
+
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xmeml>
 <xmeml version="5">
@@ -408,8 +676,8 @@ def zbuduj_xmeml(kadry, katalog, fps, width, height, handle_sec, nazwa_projektu,
                     <enabled>TRUE</enabled>
                     <locked>FALSE</locked>
                 </track>
-            </video>
-        </media>
+            </video>{sekcja_audio}
+        </media>{sekcja_markerow}
     </sequence>
 </xmeml>
 """
@@ -447,6 +715,25 @@ def main():
                          f"(domyślnie {DEFAULT_PRZEJSCIE_SEC})")
     ap.add_argument("--kierunki", help=f"plik ze stronami ruchu "
                                        f"(domyślnie <images>/{PLIK_KIERUNKOW}, jeśli istnieje)")
+    ap.add_argument("--audio", help=f"plik audio na oś czasu; domyślnie pierwszy istniejący "
+                                    f"z audio/: {', '.join(KANDYDACI_AUDIO)}. "
+                                    f"„brak\" nie wstawia audio")
+    ap.add_argument("--bez-dociagania", dest="dociagnij", action="store_false",
+                    help="nie przedłużaj ostatniego kadru do końca audio (domyślnie "
+                         "przedłuża, gdy brakuje mniej niż sekunda — inaczej render "
+                         "wychodzi o kilkanaście klatek dłuższy niż oś)")
+    ap.add_argument("--audio-fade", type=float, default=DEFAULT_AUDIO_FADE_SEC,
+                    help=f"wyciszenie audio na krańcach, w sekundach (domyślnie "
+                         f"{DEFAULT_AUDIO_FADE_SEC:.0f} = wyłączone — filtr Audio Levels "
+                         f"nie był jeszcze sprawdzony w imporcie do Resolve)")
+    ap.add_argument("--markery", help=f"plik SRT na markery nawigacyjne (domyślnie "
+                                      f"txt/{PLIK_NAPISOW}, jeśli istnieje). „brak\" wyłącza")
+    ap.add_argument("--fade", type=float, default=DEFAULT_FADE_SEC,
+                    help=f"wejście z czerni i zejście do czerni, w sekundach; 0 wyłącza "
+                         f"(domyślnie {DEFAULT_FADE_SEC})")
+    ap.add_argument("--ekran-koncowy", type=float, default=DEFAULT_EKRAN_KONCOWY_SEC,
+                    help=f"marker pod ekran końcowy YouTube, tyle sekund przed końcem; "
+                         f"0 wyłącza (domyślnie {DEFAULT_EKRAN_KONCOWY_SEC:.0f})")
     ap.add_argument("--zoom-klatek", type=int, default=DEFAULT_ZOOM_KLATEK,
                     help=f"ile klatek kluczowych próbkuje wygładzenie "
                          f"(domyślnie {DEFAULT_ZOOM_KLATEK})")
@@ -497,6 +784,7 @@ def main():
         strony = [kierunki.get(n, "auto") for _, _, n in kadry]
         if plik_kier:
             print(f"pan: {strony.count('lewo')} w lewo, {strony.count('prawo')} w prawo, "
+                  f"{strony.count('srodek')} bez panoramy (motyw na osi kadru), "
                   f"{strony.count('auto')} na przemian (wg {os.path.basename(plik_kier)})")
         else:
             print(f"pan: brak {PLIK_KIERUNKOW} obok kadrów — wszystkie {len(kadry)} "
@@ -519,11 +807,77 @@ def main():
         print(f"przejścia: Cross Dissolve {args.przejscia} s na {len(kadry) - 1} cięciach "
               f"(wyrównane na cięciu, po {polowa:.2f} s z zapasu każdego sąsiada)")
 
+    total = kadry[-1][1]
+
+    # --- audio na oś czasu -----------------------------------------------------
+    audio_plik, klatek_audio = None, 0
+    if args.audio != "brak":
+        audio_plik, uwaga = znajdz_audio(katalog, args.audio)
+        if not audio_plik:
+            print(f"audio: nie znalazłem żadnego z {', '.join(KANDYDACI_AUDIO)} w audio/ — "
+                  f"oś powstanie bez ścieżki audio", file=sys.stderr)
+        else:
+            klatek_audio, sek_audio, opis = dlugosc_audio(audio_plik, args.fps)
+            if uwaga:
+                print(f"  UWAGA: {uwaga}", file=sys.stderr)
+            brak_klatek = klatek_audio - total
+            roznica = brak_klatek / args.fps
+            print(f"audio: {os.path.basename(audio_plik)} ({opis}), "
+                  f"{sek_audio:.3f} s = {klatek_audio} klatek")
+            # Nazwy kadrów z Etapu 5 mają rozdzielczość jednej sekundy, więc ostatni kadr
+            # prawie nigdy nie kończy się dokładnie tam, gdzie audio — zostaje ogon rzędu
+            # dziesiątych sekundy. Resolve renderuje do dłuższego ze strumieni, czyli do
+            # audio, i te kilkanaście klatek ląduje w gotowym pliku jako nadmiar
+            # (Psalm 119: 18 klatek). Dociągamy ostatni kadr do końca audio, żeby problem
+            # nie powstał, zamiast docinać go potem w wyeksportowanym filmie.
+            if args.dociagnij and 0 < brak_klatek <= args.fps:
+                s, k, n = kadry[-1]
+                kadry[-1] = (s, klatek_audio, n)
+                total = klatek_audio
+                print(f"  ostatni kadr dociągnięty o {brak_klatek} klatek "
+                      f"({roznica:.3f} s) do końca audio — oś kończy się równo z dźwiękiem")
+            elif abs(roznica) >= 0.5:
+                print(f"  UWAGA: audio i oś rozjeżdżają się o {roznica:+.2f} s "
+                      f"(oś {total / args.fps:.3f} s). Sprawdź nazwy kadrów z Etapu 5 "
+                      f"albo czy audio nie zostało przycięte.", file=sys.stderr)
+            else:
+                print(f"  zgodność z osią: {roznica:+.3f} s")
+
+    # --- markery z napisów -----------------------------------------------------
+    markery = []
+    if args.markery != "brak":
+        napisy, plik_srt = wczytaj_napisy(katalog, args.fps, args.markery)
+        for klatka, tekst in napisy:
+            if klatka <= total:
+                markery.append((klatka, tekst, "napisy.srt"))
+        if plik_srt:
+            print(f"markery: {len(markery)} z {os.path.basename(plik_srt)}")
+        else:
+            print(f"markery: brak txt/{PLIK_NAPISOW} — oś powstanie bez markerów",
+                  file=sys.stderr)
+    if args.ekran_koncowy:
+        klatka_ek = total - int(round(args.ekran_koncowy * args.fps))
+        if klatka_ek > 0:
+            markery.append((klatka_ek, "EKRAN KOŃCOWY YouTube",
+                            f"ostatnie {args.ekran_koncowy:.0f} s — miejsce na ekran końcowy"))
+            print(f"  + marker ekranu końcowego na {klatka_ek / args.fps / 60:.0f}:"
+                  f"{klatka_ek / args.fps % 60:04.1f}")
+    markery.sort()
+
+    # --- fade z czerni i do czerni ---------------------------------------------
+    if args.fade:
+        najkrotszy = min((k - s) / args.fps for s, k, _ in kadry)
+        if args.fade > najkrotszy / 2:
+            sys.exit(f"--fade {args.fade} s nie zmieści się — najkrótszy kadr ma "
+                     f"{najkrotszy:.1f} s")
+        print(f"fade: {args.fade} s z czerni na wejściu i do czerni na wyjściu")
+
     uzyte = []
     tresc = zbuduj_xmeml(kadry, katalog, args.fps, args.width, args.height,
                          args.handle, args.name, args.zoom, args.zoom_klatek,
                          args.pan, kierunki, args.zoom_ref, args.zoom_min, uzyte,
-                         args.przejscia)
+                         args.przejscia, audio_plik, klatek_audio,
+                         int(round(args.audio_fade * args.fps)), markery, args.fade)
     os.makedirs(os.path.dirname(wyjscie), exist_ok=True)
     with open(wyjscie, "w", encoding="utf-8") as fh:
         fh.write(tresc)
